@@ -1,5 +1,12 @@
-A: file: list-subjects.html
+A: file: list-subjects.html BUG
     - δεν εμφανιζονται τα subjects, αλλα αποθηκευονται στο database
     - τι ειναι τα subjects (objective: a, title: PIMP) και γιατι καποιες φορες ειναι 2 και καποιες 3
     - ολοκληρο το tbody (γραμμες 37-55) δεν μου εμφανιζεται καθολου
 
+file: AuthController.java   BUG
+    - giati exoume successMessage kai oxi failureMessage?
+
+file: Professor.java
+    - mporoyme na kanoume merge to username kai fullname, omos ayto mporei na prokalesei problhmata an px 2 atoma legontai giorgos papadopoulos. mia enalaktikh einai
+      na kanoyme ena ksexoristo table opou tha exei mono to username kai to fullname, me to username san kleidi, opote an kapoios allaksei to fullname, apla na
+      psaxnei se ayto to table gia to monadiko username toy

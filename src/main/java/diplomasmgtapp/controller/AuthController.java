@@ -44,7 +44,7 @@ public class AuthController {
         if(userService.isUserPresent(user)){
             // A: giati successMessage kai oxi failureMessage?
             model.addAttribute("successMessage", "User already registered!");
-            return "auth/signin";
+            return "auth/signup";
         }
 
         userService.saveUser(user);

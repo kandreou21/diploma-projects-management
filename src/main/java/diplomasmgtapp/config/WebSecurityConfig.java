@@ -70,7 +70,7 @@ public class WebSecurityConfig {
                 // logout
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied");

@@ -18,7 +18,7 @@ public class ThresholdStrategy implements BestApplicantStrategy{
 		
 		Student bestApplicant = new Student("dummy");
 		for (Application app : applications) {
-			if (app.getApplicantStudent().getAverageGrade() > gradeThreshold && app.getApplicantStudent().getRemainingCourses() < coursesThreshold) {
+			if (app.getApplicantStudent().getAverageGrade() >= gradeThreshold && app.getApplicantStudent().getRemainingCourses() <= coursesThreshold) {
 				bestApplicant = app.getApplicantStudent();
 			}
 		}

@@ -17,7 +17,7 @@ public class ExplicitAssignmentStrategy implements BestApplicantStrategy {
 		for (int i = 0; i < applications.size(); i++) {
 			System.out.println(i + ":" + applications.get(i).getApplicantStudent().getFullname());
 		}
-		System.out.print("Select the wanted applicant by entering its number:");
+		System.out.print("Select the wanted applicant by entering their number: ");
 		int id = input.nextInt();
 		System.out.println(applications.get(id).getApplicantStudent().getFullname());
 		return applications.get(id).getApplicantStudent();

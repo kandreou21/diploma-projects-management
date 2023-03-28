@@ -55,6 +55,8 @@ public class Student{
 		this.username = username;
 	}
 	//why have username as field and not set their fullnames with the User's username value? because if we change the fullname username!=fullname we will not be able to retrieve profile
+	// A: answered in model\Professor.java
+
 	//public Student(String username) {
 	//	this.username = username;
 	//}

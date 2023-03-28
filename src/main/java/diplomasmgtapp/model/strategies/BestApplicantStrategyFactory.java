@@ -9,17 +9,20 @@ public class BestApplicantStrategyFactory {
 
 	public static BestApplicantStrategy createStrategy(String strategy) 
 		throws WrongStrategyException {
-		
-		if (strategy == "Best Avg Grade") {
-			return new BestAvgGradeStrategy();
-		} else if (strategy == "Fewest Courses") {
-			return new FewestCoursesStrategy();
-		} else if (strategy == "Threshold") {
-			return new ThresholdStrategy();
-		} else if (strategy == "Random") {
-			return new RandomChoiceStrategy();
-		} else if (strategy == "Explicit") {
-			return new ExplicitAssignmentStrategy();
-		} else throw new WrongStrategyException();
+
+		switch (strategy) {
+			case "Best Avg Grade":
+				return new BestAvgGradeStrategy();
+			case "Fewest Courses":
+				return new FewestCoursesStrategy();
+			case "Threshold":
+				return new ThresholdStrategy();
+			case "Random":
+				return new RandomChoiceStrategy();
+			case "Explicit":
+				return new ExplicitAssignmentStrategy();
+			default:
+				throw new WrongStrategyException();
+		}
 	}
 }

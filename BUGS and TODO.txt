@@ -1,10 +1,24 @@
 A: file: list-subjects.html BUG
     - δεν εμφανιζονται τα subjects, αλλα αποθηκευονται στο database
-    - τι ειναι τα subjects (objective: a, title: PIMP) και γιατι καποιες φορες ειναι 2 και καποιες 3
+        - found the issue, τα subjects δεν αποθηκευονται στον καθηγητη, δλδ ειναι orphans, οποτε το
+          professorService.listProfessorSubjects(username)) επιστρεφει κενη λιστα
+        - επισης με ενα γρηγορο ελεγχο με print, το form στο site δεν καλει ποτε την
+          ProfessorServiceImpl.java -> addSubject()
+          εβαλα 3 γραμμες για να το κανει αυτο, αλλα και παλι το αρχικο δεν δουλευει.
+    Potential fix : να κανει ενα traverse το subjects table και να τσεκαρει αν το subject εχει αυτον τον καθηγητη σαν supervisor?
     - ολοκληρο το tbody (γραμμες 37-55) δεν μου εμφανιζεται καθολου
+--------FIXED--------
 
 file: AuthController.java   BUG
-    - giati exoume successMessage kai oxi failureMessage?
+    - line 46: giati exoume successMessage kai oxi failureMessage?
+
+GENERAL: BUG
+    - δεν υπαρχει κουμπι στο /listProfessorSubjects για να παμε πισω
+--------FIXED--------
+
+GENERAL: BUG
+    - μπορουμε να βαλουμε γραμματα στο form για τη δημιουργια μαθητη (στο ετος σπουδων κλπ) και crasharei, παει στο /error.
+      να βαλουμε τσεκ ωστε να μην το αφηνει αυτο
 
 file: Professor.java
     - mporoyme na kanoume merge to username kai fullname, omos ayto mporei na prokalesei problhmata an px 2 atoma legontai giorgos papadopoulos. mia enalaktikh einai

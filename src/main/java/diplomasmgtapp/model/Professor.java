@@ -60,9 +60,6 @@ public class Professor{
 		this.username = username;
 	}
 	//why have username as field and not set their fullnames with the User's username value? because if we change the fullname username!=fullname we will not be able to retrieve profile
-	// Α: mporoyme na kanoume merge to username kai fullname, omos ayto mporei na prokalesei problhmata an px 2 atoma legontai giorgos papadopoulos. mia enalaktikh einai
-	// na kanoyme ena ksexoristo table opou tha exei mono to username kai to fullname, me to username san kleidi, opote an kapoios allaksei to fullname, apla na
-	// psaxnei se ayto to table gia to monadiko username toy
 
 	public int getId() {
 		return id;
@@ -88,9 +85,7 @@ public class Professor{
 		this.specialty = specialty;
 	}
 
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
+	public List<Subject> getSubjects() { return subjects; }
 	
 	public List<Thesis> getTheses() {
 		return theses;

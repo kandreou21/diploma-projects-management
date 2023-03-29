@@ -70,9 +70,8 @@ public class ProfessorController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName(); //username
 
-		professorService.addSubject(username, new Subject("PIMP", "a"));
 		List<Subject> subjects = professorService.listProfessorSubjects(username);
-				
+		
 		// add to the spring model
 		model.addAttribute("subjects", subjects);
 		return "professor/list-subjects";
@@ -89,7 +88,13 @@ public class ProfessorController {
 	
 	@RequestMapping("/addSubject")
 	public String addSubject(@ModelAttribute("subject") Subject subject, Model model) {
-		subjectService.save(subject);		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName(); //username
+
+		subject.setSupervisor(professorService.retrieveProfile(username));
+		subjectService.save(subject);
+		professorService.addSubject(username, subject);
+
 		// use a redirect to prevent duplicate submissions
 		return "redirect:/professor/listProfessorSubjects";
 	}

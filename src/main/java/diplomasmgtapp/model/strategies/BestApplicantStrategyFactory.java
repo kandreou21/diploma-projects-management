@@ -19,8 +19,6 @@ public class BestApplicantStrategyFactory {
 				return new ThresholdStrategy();
 			case "Random":
 				return new RandomChoiceStrategy();
-			case "Explicit":
-				return new ExplicitAssignmentStrategy();
 			default:
 				throw new WrongStrategyException();
 		}

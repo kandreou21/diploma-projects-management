@@ -1,3 +1,3 @@
 netstat -ano | findstr 8080
 taskkill /F /PID *<pid>*
-Jar Packaging: https://www.youtube.com/watch?v=GIyIWpC5YIw&ab_channel=KKJavaTutorials
+Jar Packaging tutorial: https://www.youtube.com/watch?v=GIyIWpC5YIw&ab_channel=KKJavaTutorials

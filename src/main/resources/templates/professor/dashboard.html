@@ -27,8 +27,10 @@
 
     <p>
     	<a th:href="@{/}" class="btn btn-primary btn-sm mb-3">Home</a>
-    	<a th:href="@{/professor/setProfileInfo}" class="btn btn-danger btn-sm mb-3">Set Professor's Info</a>
-    	<a th:href="@{/professor/listProfessorSubjects}" class="btn btn-danger btn-sm mb-3">Manage Subjects</a>
+    	<a th:href="@{/professor/setProfileInfo}" class="btn btn-info	 btn-sm mb-3">Set Professor's Info</a>
+    	<a th:href="@{/professor/retrieveProfile}" class="btn btn-info btn-sm mb-3">Show Profile</a>
+    	<a th:href="@{/professor/listProfessorSubjects}" class="btn btn-warning btn-sm mb-3">Manage Subjects & Applications</a>
+    	<a th:href="@{/professor/listProfessorTheses}" class="btn btn-warning btn-sm mb-3">View assigned theses</a>
     	<a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3">Logout</a> <!-- /logout einai sto WebSecurityConfig-->
     </p>
 

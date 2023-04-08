@@ -41,14 +41,6 @@ public class Professor{
 
 	public Professor() {}
 	
-	public Professor(int id, String fullname, String specialty) {
-		this.id = id;
-		this.fullname = fullname;
-		this.specialty = specialty;
-		this.subjects = new ArrayList<Subject>();
-		this.theses = new ArrayList<Thesis>();
-	}
-	
 	public Professor(String fullname, String specialty) {
 		this.fullname = fullname;
 		this.specialty = specialty;
@@ -99,38 +91,17 @@ public class Professor{
 		this.username = username;
 	}
 
-	public void addSubject(Subject subject) {
+	public void addSubject(Subject subject) {	//https://vladmihalcea.com/jpa-hibernate-synchronize-bidirectional-entity-associations/
 		subjects.add(subject);
+		subject.setSupervisor(this);
 	}
 	
 	public void removeSubject(Subject subject) {
 		subjects.remove(subject);
+		subject.setSupervisor(null);
 	}
 	
 	public void assignThesis(Thesis thesis) {
 		theses.add(thesis);
 	}
-
-	//tha pairnoun orisma gia poio thesis subject na settaroun to grade kai tha kanoun call tis Thesis methods
-	public void setImplementationGrade(Thesis thesis, double implementationGrade) {
-		theses.get(theses.indexOf(thesis)).setImplementationGrade(implementationGrade);
-	}
-	
-	public void setReportGrade(Thesis thesis, double reportGrade) {
-		theses.get(theses.indexOf(thesis)).setReportGrade(reportGrade);
-	}
-
-	public void setPresentationGrade(Thesis thesis, double presentationGrade) {
-		theses.get(theses.indexOf(thesis)).setPresentationGrade(presentationGrade);
-	}
-	
-	public double calculateThesisGrade(Thesis thesis) {
-		return theses.get(theses.indexOf(thesis)).getOverallGrade();
-	}
-	
-	public String toString() {
-		return "Professor [id=" + id + ", fullname=" + fullname + ", specialty=" + specialty + ", username=" + username
-				+ "]";
-	}
-
 }

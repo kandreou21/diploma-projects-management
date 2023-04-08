@@ -2,10 +2,12 @@ package diplomasmgtapp.model.strategies;
 
 import java.util.List;
 
-import diplomasmgtapp.model.Student;
+import org.springframework.stereotype.Component;
+
 import diplomasmgtapp.model.Application;
 
+@Component
 public interface BestApplicantStrategy {
 
-	public Student findBestApplicant(List<Application> applications);
+	public Application findBestApplicant(List<Application> applications);
 }

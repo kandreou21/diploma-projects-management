@@ -10,10 +10,9 @@ import diplomasmgtapp.model.Subject;
 
 @Service
 public interface StudentService {
-	//ta onomata ton arguments einai ektimiseis
 	public void saveProfile(Student student);
 	public Student retrieveProfile(String username);
 	public List<Subject> listStudentSubjects();
-	//public void applyToSubject(Application application);
-	public void applyToSubject(String subjectTitle, int id); //AUTH EINAI H METHODOS STA REQUIR
+	public List<Application> listApplications(String username);
+	public void applyToSubject(String username, int subjectId); 
 }

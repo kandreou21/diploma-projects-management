@@ -7,32 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import diplomasmgtapp.model.Subject;
-import diplomasmgtapp.model.strategies.BestApplicantStrategy;
 import diplomasmgtapp.dao.SubjectDAO;
 
 @Service
+
 public class SubjectServiceImpl implements SubjectService {
-
-	private List<BestApplicantStrategy> bestApplicantStrategies; //guidelines
-	
-	private SubjectDAO subjectDAO;
-	
-	public SubjectServiceImpl() {
-		super();
-	}
-
 	@Autowired
-	public SubjectServiceImpl(List<BestApplicantStrategy> bestApplicantStrategies, SubjectDAO theSubjectRepository) {
-		this.bestApplicantStrategies = bestApplicantStrategies;
-		this.subjectDAO = theSubjectRepository;
-	}
+	private SubjectDAO subjectDAO;
 	
 	@Override
 	@Transactional
 	public List<Subject> findAll() {
 		return subjectDAO.findAll();
 	}
-
+	
 	@Override
 	@Transactional
 	public Subject findById(int theId) {
@@ -53,7 +41,7 @@ public class SubjectServiceImpl implements SubjectService {
 	}
 
 	@Override
-	public void deleteById(int theId) {
+	public void deleteById(int theId) { 
 		subjectDAO.deleteById(theId);
 	}
 }

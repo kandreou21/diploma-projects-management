@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Professor Directory</title>
+</head>
+
+<body>
+	
+	<div class="container">
+	
+		<h3>Set Thesis Grades</h3>
+		<hr>
+		
+		<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Thesis's subject</th>
+				<th>Student's fullname</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<td th:text="${thesis.subject.title}" />	
+				<td th:text="${thesis.student.fullname}" />
+			</tr>
+		</tbody>
+		</table>
+		
+		
+		<form action="#" th:action="@{/professor/saveThesis(thesisId=${thesis.id})}"
+						 th:object="${thesis}" method="POST">
+		
+			<!-- Add hidden form field to handle update -->
+			<input type="hidden" th:field="*{id}" />
+			
+			
+			
+			<label>Implementation Grade:</label>
+			<input type="text" th:field="*{implementationGrade}"
+					class="form-control mb-4 col-4" placeholder="implementation Grade" required>
+
+			<label>Report Grade:</label>
+			<input type="text" th:field="*{reportGrade}"
+					class="form-control mb-4 col-4" placeholder="report Grade" required>
+					
+			<label>Presentation Grade:</label>		
+			<input type="text" th:field="*{presentationGrade}"
+					class="form-control mb-4 col-4" placeholder="presentation Grade" required>
+			
+			<button type="submit" class="btn btn-info col-2">Submit</button>
+				
+		</form>
+	
+		<hr>
+		<a th:href="@{/professor/listProfessorTheses}">Back to Theses List</a>
+		
+	</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

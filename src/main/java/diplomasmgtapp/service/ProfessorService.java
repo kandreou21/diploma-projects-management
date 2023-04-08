@@ -8,22 +8,19 @@ import diplomasmgtapp.model.Application;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Subject;
 import diplomasmgtapp.model.Thesis;
+import diplomasmgtapp.model.strategies.BestApplicantStrategy;
 
 @Service
 public interface ProfessorService {
-	//ta onomata ton arguments einai ektimiseis
 	public Professor retrieveProfile(String username);
 	public void saveProfile(Professor professor);
-	public List<Subject> listProfessorSubjects(String professorName);
-	public void addSubject(String professorName, Subject subject);
-	public void deleteSubject(String professorName, Subject subject);
-	public List<Application> listApplications(String professorName, int id);
-	public List<Thesis> listProfessorTheses(String professorName);
-	public void assignSubject(String professorName, int id);
-	public void setImplementationGrade(Thesis thesis, double implementationGrade, String professorName);
-	public void setReportGrade(Thesis thesis, double reportGrade, String professorName);
-	public void setPresentationGrade(Thesis thesis, double presentationGrade, String professorName);
-	public double calculateThesisGrade(Thesis thesis, String professorName);
-	public Professor findByFullname(String professorName);
+	public List<Subject> listProfessorSubjects(String username);
+	public void addSubject(String username, Subject subject);
+	public List<Application> listApplications(int subjectId);
+	public List<Thesis> listProfessorTheses(String username);
+	public void assignSubjectExplicitly(String username, int applicationId);
+	public void assignSubject(String username, int subjectId, int strategyIndex);
+	public List<BestApplicantStrategy> getBestApplicantStrategies();
+	public void assignThresholdStrategy(String username, int subjectId, double gradeThreshold, int coursesThreshold);
 }
 

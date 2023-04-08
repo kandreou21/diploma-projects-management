@@ -35,20 +35,14 @@ public class Subject {
 	
 	@ManyToOne
 	@JoinColumn(name="supervisor_id")
-	private Professor supervisor; //ease, logika xreiazetai gia na ginetai get apo tous Students poios einai o ekastoste Prof enos mathimatos 
+	private Professor supervisor; //xreiazetai gia na ginetai get apo tous Students poios einai o ekastoste Prof enos mathimatos 
 	
 	public Subject() {}
-	
-	public Subject(int id, String title, String objectives) {
-		this.id = id;
+
+	public Subject(String title, String objectives, Professor supervisor) { //extracted from Professor user stories 
 		this.title = title;
 		this.objectives = objectives;
-		this.applications = new ArrayList<Application>();
-	}
-	
-	public Subject(String title, String objectives) { //extracted from Professor user stories 
-		this.title = title;
-		this.objectives = objectives;
+		this.supervisor = supervisor;
 		this.applications = new ArrayList<Application>();
 	}
 
@@ -92,8 +86,12 @@ public class Subject {
 		this.supervisor = supervisor;
 	}
 
-	public String toString() {
-		return "Subject [id: " + id + ", Title: " + title + ", Objectives : " + objectives + ", Supervisor: " + supervisor + ", Applications: " + applications + "]"; 
+	public void addApplication(Application application) {	//https://vladmihalcea.com/jpa-hibernate-synchronize-bidirectional-entity-associations/
+		applications.add(application);
+		application.setSubject(this);	
 	}
 	
+	public void removeApplication(Application application) {
+		applications.remove(application);
+	}
 }

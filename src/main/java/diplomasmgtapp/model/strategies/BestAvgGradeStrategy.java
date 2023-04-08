@@ -2,7 +2,7 @@ package diplomasmgtapp.model.strategies;
 
 import diplomasmgtapp.model.Application;
 
-//@Component
+@Component("StrategyA")
 public class BestAvgGradeStrategy extends TemplateStrategyAlgorithm {
 
 	@Override
@@ -13,16 +13,8 @@ public class BestAvgGradeStrategy extends TemplateStrategyAlgorithm {
 		return false;
 	}
 
-	/*
-	public Student findBestApplicant(List<DiplomaProjectsManagementApp> applications) {
-		DiplomaProjectsManagementApp bestApp = applications.get(0);
-		for (DiplomaProjectsManagementApp app : applications) {
-			if (app.getApplicantStudent().getAverageGrade() > bestApp.getApplicantStudent().getAverageGrade()) {
-				bestApp = app;
-			}
-		}
-		System.out.println("Best Applicant: " + bestApp.getApplicantStudent().getFullname());
-		return bestApp.getApplicantStudent();  
+	@Override
+	public String toString() {
+		return "BestAvgGradeStrategy";
 	}
-	*/
 }

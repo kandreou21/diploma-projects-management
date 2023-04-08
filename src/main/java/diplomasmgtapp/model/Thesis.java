@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="theses")
@@ -26,11 +27,6 @@ public class Thesis {
 	@JoinColumn(name="subject_id")
 	private Subject subject;
 	
-	/*
-	@ManyToOne
-	@JoinColumn(name="supervisor_id")
-	private Professor supervisor; //to ease, alla logika dn xreiazetai afou den xreiazetai na ginetai get apo allo entity tou programmatos pera tou Professor.
-	*/
 	@Column(name="implementation_grade")
 	private double implementationGrade;
 	
@@ -40,13 +36,10 @@ public class Thesis {
 	@Column(name="presentation_grade")
 	private double presentationGrade;
 	
-	public Thesis() {}
+	@Transient
+	private double overallGrade;
 	
-	public Thesis(int id, Student student, Subject subject) {
-		this.id = id;
-		this.student = student;
-		this.subject = subject;
-	}
+	public Thesis() {}
 
 	public Thesis(Student student, Subject subject) {
 		this.student = student;
@@ -103,5 +96,12 @@ public class Thesis {
 
 	public double getOverallGrade() {
 		return 0.7*implementationGrade + 0.15*reportGrade + 0.15*presentationGrade;
+	}
+
+	@Override
+	public String toString() {
+		return "Thesis [id=" + id + ", student=" + student + ", subject=" + subject + ", implementationGrade="
+				+ implementationGrade + ", reportGrade=" + reportGrade + ", presentationGrade=" + presentationGrade
+				+ ", overallGrade=" + overallGrade + "]";
 	}
 }

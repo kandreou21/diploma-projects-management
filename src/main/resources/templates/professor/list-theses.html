@@ -16,28 +16,49 @@
 
 <div class="container">
 
-	<h3>Professor Info</h3>
+	<h3>Theses Directory</h3>
 	<hr>
 	
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
-				<th>Fullname</th>
-				<th>Specialty</th>
+				<th>Subject's thesis title</th>
+				<th>Student</th>
+				<th>Set Grades</th>
+				<th>View Grades</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<tr th:each="tempProfessor : ${professor}">
+			<tr th:each="tempThesis : ${theses}">
 			
-				<td th:text="${tempProfessor.fullname}" />	
-				<td th:text="${tempProfessor.specialty}" />					
+				<td th:text="${tempThesis.subject.title}" />	
+				<td th:text="${tempThesis.student.fullname}" />		
+				
+				<td>
+					<!-- Add "Set Grades" button/link to be added -->				
+					<a th:href="@{/professor/showThesisForm(thesisId=${tempThesis.id})}"
+					   class="btn btn-info btn-sm">
+						Set
+					</a>
+					
+				</td>
+				
+				<td>
+					<!-- Add "Set Grades" button/link to be added -->				
+					<a th:href="@{/professor/showGrades(thesisId=${tempThesis.id})}"
+					   class="btn btn-info btn-sm">
+						View
+					</a>
+					
+				</td>
+				
 			</tr>
 		</tbody>		
 	</table>
-	
-	<hr> 
+	<hr>
 		<a th:href="@{/professor/dashboard}">Back to dashboard</a>
+	
 </div>
 	
 </body>

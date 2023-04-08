@@ -1,7 +1,5 @@
 package diplomasmgtapp.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +25,7 @@ public class AuthController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping("/login") //GENIKA edw sto request mapping mporo na balo /login/{price} kai h methodos na exei os arguemnt p.x. login(@PathVariable double price)
+    @RequestMapping("/login")
     public String login(){
         return "auth/signin";
     }
@@ -60,11 +58,5 @@ public class AuthController {
 
         return "auth/signin";
     }
-    /*
-    @RequestMapping("/users") //test, @RestController to work kai allages sto WebSecurityConfig
-    public List<User> getUsers(){
-    	return userService.getUsers();
-    }
-    */
 }
 

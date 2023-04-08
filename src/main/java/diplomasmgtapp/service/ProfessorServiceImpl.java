@@ -6,17 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import diplomasmgtapp.dao.ApplicationDAO;
 import diplomasmgtapp.dao.ProfessorDAO;
 import diplomasmgtapp.model.Application;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Subject;
 import diplomasmgtapp.model.Thesis;
+import diplomasmgtapp.model.strategies.BestApplicantStrategy;
+import diplomasmgtapp.model.strategies.ThresholdStrategy;
 
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 	@Autowired
+	private List<BestApplicantStrategy> bestApplicantStrategies; 
+	
+	@Autowired
 	private ProfessorDAO professorDAO;
 	
+	@Autowired
+	private ApplicationDAO applicationDAO;
+	
+	@Autowired
+	private SubjectService subjectService;
+	
+	@Override
+	public List<BestApplicantStrategy> getBestApplicantStrategies() {
+		return bestApplicantStrategies;
+	}
+
+	public void setBestApplicantStrategies(List<BestApplicantStrategy> bestApplicantStrategies) {
+		this.bestApplicantStrategies = bestApplicantStrategies;
+	}
+
 	@Override
 	public Professor retrieveProfile(String username) {
 		return professorDAO.findByUsername(username);
@@ -34,63 +55,58 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 
 	@Override
-	public void addSubject(String professorName, Subject subject) {
-		Professor professor = professorDAO.findByUsername(professorName);
+	public void addSubject(String username, Subject subject) {
+		Professor professor = professorDAO.findByUsername(username);
 		professor.addSubject(subject);
 		professorDAO.save(professor);
 	}
 
 	@Override
-	public void deleteSubject(String professorName, Subject subject) {
-		Professor professor = professorDAO.findByFullname(professorName);
-		professor.removeSubject(subject);
+	public List<Application> listApplications(int subjectId) {
+		return subjectService.findById(subjectId).getApplications();
+	}
+
+	@Override
+	public List<Thesis> listProfessorTheses(String username) {
+		return professorDAO.findByUsername(username).getTheses();
+	}
+	
+	@Override
+	public void assignSubjectExplicitly(String username, int applicationId) {
+		Professor professor = professorDAO.findByUsername(username);
+		Application application = applicationDAO.findById(applicationId);
+		professor.assignThesis(new Thesis(application.getApplicantStudent(), application.getSubject()));
+		applicationDAO.deleteById(applicationId);
 		professorDAO.save(professor);
 	}
 	
 	@Override
-	public List<Application> listApplications(String professorName, int subjectId) {
-		return professorDAO.findByFullname(professorName).getSubjects().get(subjectId).getApplications();
+	public void assignThresholdStrategy(String username, int subjectId, double gradeThreshold, int coursesThreshold) {
+		ThresholdStrategy strategy = new ThresholdStrategy();
+		strategy.setGradeThreshold(gradeThreshold);
+		strategy.setCoursesThreshold(coursesThreshold);
+		executeAssignment(username, subjectId, strategy);
 	}
 
 	@Override
-	public List<Thesis> listProfessorTheses(String professorName) {
-		return professorDAO.findByFullname(professorName).getTheses();
+	public void assignSubject(String username, int subjectId, int strategyIndex) {
+		BestApplicantStrategy strategy = bestApplicantStrategies.get(strategyIndex);
+		executeAssignment(username, subjectId, strategy);
 	}
-	//not sure to be fixed
-	@Override
-	public void assignSubject(String professorName, int id) {
-		professorDAO.findByFullname(professorName);
-	}
-
-	@Override
-	public void setImplementationGrade(Thesis thesis, double implementationGrade, String professorName) {
-		Professor professor = professorDAO.findByFullname(professorName);
-		professor.setImplementationGrade(thesis, implementationGrade);
-		professorDAO.save(professor);
-	}
-
-	@Override
-	public void setReportGrade(Thesis thesis, double reportGrade, String professorName) {
-		Professor professor = professorDAO.findByFullname(professorName);
-		professor.setImplementationGrade(thesis, reportGrade);
-		professorDAO.save(professor);
-	}
-
-	@Override
-	public void setPresentationGrade(Thesis thesis, double presentationGrade, String professorName) {
-		Professor professor = professorDAO.findByFullname(professorName);
-		professor.setImplementationGrade(thesis, presentationGrade);
-		professorDAO.save(professor);
-	}
-
-	@Override
-	public double calculateThesisGrade(Thesis thesis, String professorName) {
-		Professor professor = professorDAO.findByFullname(professorName);
-		return professor.calculateThesisGrade(thesis);
-	}
-
-	@Override
-	public Professor findByFullname(String professorName) {
-		return professorDAO.findByFullname(professorName);
+	
+	private void executeAssignment(String username, int subjectId, BestApplicantStrategy strategy) { //template method
+		Professor professor = professorDAO.findByUsername(username);
+		Subject subject = subjectService.findById(subjectId);
+		List<Application> applications = subject.getApplications();
+		Application bestApp = null;
+		try {	
+			bestApp = strategy.findBestApplicant(applications);
+		} catch(NullPointerException e){}
+		if (bestApp != null) {
+			professor.assignThesis(new Thesis(bestApp.getApplicantStudent(), bestApp.getSubject()));
+			subject.removeApplication(bestApp);
+			applicationDAO.deleteById(bestApp.getId());
+			professorDAO.save(professor);
+		}
 	}
 }

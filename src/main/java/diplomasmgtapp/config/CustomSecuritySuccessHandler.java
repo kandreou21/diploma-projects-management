@@ -53,7 +53,7 @@ public class CustomSecuritySuccessHandler extends SimpleUrlAuthenticationSuccess
         if(roles.contains("PROFESSOR")){
         	Professor professor = professorService.retrieveProfile(username);
         	if (professor.getFullname() == null) { 
-        		url = "/professor/setProfileInfo";  //to onoma sthn perenthesi tou requestMapping     		
+        		url = "/professor/setProfileInfo";  //at the first time login set profile info     		
         	} else {
         		url = "/professor/dashboard";  
         	}

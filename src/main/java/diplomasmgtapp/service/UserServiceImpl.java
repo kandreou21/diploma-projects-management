@@ -1,6 +1,5 @@
 package diplomasmgtapp.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 	@Override
-	public boolean isUserPresent(User user) {  //gia na chekaroume an exei xrhsimopoihthei to username
+	public boolean isUserPresent(User user) {  
 		Optional<User> storedUser = userDAO.findByUsername(user.getUsername());
 		return storedUser.isPresent();
 	}

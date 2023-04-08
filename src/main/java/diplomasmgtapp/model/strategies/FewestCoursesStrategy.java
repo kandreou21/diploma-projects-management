@@ -8,11 +8,11 @@ import diplomasmgtapp.model.Application;
 public class FewestCoursesStrategy extends TemplateStrategyAlgorithm {
 
 	@Override
-	protected int compareApplication(Application app, Application bestApp) {
+	protected boolean compareApplication(Application app, Application bestApp) {
 		if (app.getApplicantStudent().getRemainingCourses() < bestApp.getApplicantStudent().getRemainingCourses()) {
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 
 	@Override

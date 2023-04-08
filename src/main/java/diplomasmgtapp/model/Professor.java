@@ -52,7 +52,7 @@ public class Professor{
 		this.username = username;
 	}
 	//why have username as field and not set their fullnames with the User's username value? because if we change the fullname username!=fullname we will not be able to retrieve profile
-	
+
 	public int getId() {
 		return id;
 	}
@@ -77,9 +77,7 @@ public class Professor{
 		this.specialty = specialty;
 	}
 
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
+	public List<Subject> getSubjects() { return subjects; }
 	
 	public List<Thesis> getTheses() {
 		return theses;

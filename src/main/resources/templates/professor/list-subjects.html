@@ -42,7 +42,7 @@
 				<td th:text="${tempSubject.objectives}" />	
 				
 				<td>
-					<!-- Add "delete" button/link -->					
+					<!-- Add "delete" button/link -->
 					<a th:href="@{/professor/deleteSubject(subjectId=${tempSubject.id})}"
 					   class="btn btn-danger btn-sm"
 					   onclick="if (!(confirm('Are you sure you want to delete this subject?'))) return false">

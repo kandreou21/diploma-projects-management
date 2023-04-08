@@ -1,18 +1,16 @@
 package diplomasmgtapp.model.strategies;
 
-import org.springframework.stereotype.Component;
-
 import diplomasmgtapp.model.Application;
 
 @Component("StrategyA")
 public class BestAvgGradeStrategy extends TemplateStrategyAlgorithm {
 
 	@Override
-	protected int compareApplication(Application app, Application bestApp) {
+	protected boolean compareApplication(Application app, Application bestApp) {
 		if (app.getApplicantStudent().getAverageGrade() > bestApp.getApplicantStudent().getAverageGrade()) {
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 
 	@Override

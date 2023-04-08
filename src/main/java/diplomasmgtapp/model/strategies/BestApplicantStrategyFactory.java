@@ -22,6 +22,5 @@ public class BestApplicantStrategyFactory {
 			default:
 				throw new WrongStrategyException();
 		}
-
 	}
 }

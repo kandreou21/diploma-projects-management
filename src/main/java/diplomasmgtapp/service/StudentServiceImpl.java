@@ -39,9 +39,16 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public void applyToSubject(String subjectTitle, int id) {
-		Subject subject = subjectDAO.findByTitle(subjectTitle);
-		Student student = studentDAO.findById(id);
-		applicationDAO.save(new Application(student, subject));
+	public void applyToSubject(String username, int subjectId) {
+		Student student = studentDAO.findByUsername(username);
+		Subject subject = subjectDAO.findById(subjectId);
+		Application application = new Application(student, subject);
+		student.applyToDiplomaThesis(application);
+		studentDAO.save(student);
+	}
+
+	@Override
+	public List<Application> listApplications(String username) {
+		return applicationDAO.findAllByApplicantStudent(retrieveProfile(username));
 	}
 }

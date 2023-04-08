@@ -9,35 +9,37 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-	<title>Professor Directory</title>
+	<title>Student Directory</title>
 </head>
 
 <body>
 
 <div class="container">
 
-	<h3>Professor Info</h3>
+	<h3>Applications to subjects</h3>
 	<hr>
 	
 	<table class="table table-bordered table-striped">
 		<thead class="thead-dark">
 			<tr>
-				<th>Fullname</th>
-				<th>Specialty</th>
+				<th>Subject</th>
+				<th>Subject's Objectives</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<tr th:each="tempProfessor : ${professor}">
+			<tr th:each="tempApplication : ${applications}">
 			
-				<td th:text="${tempProfessor.fullname}" />	
-				<td th:text="${tempProfessor.specialty}" />					
+				<td th:text="${tempApplication.subject.title}" />	
+				<td th:text="${tempApplication.subject.objectives}" />
+
 			</tr>
 		</tbody>		
 	</table>
 	
-	<hr> 
-		<a th:href="@{/professor/dashboard}">Back to dashboard</a>
+	<hr>
+		<a th:href="@{/student/dashboard}">Back to dashboard</a>	&nbsp;
+		<a th:href="@{/student/listAvailableSubjects}">Available Subjects</a>	
 </div>
 	
 </body>

@@ -1,8 +1,10 @@
 package diplomasmgtapp.model.strategies;
 
+import org.springframework.stereotype.Component;
+
 import diplomasmgtapp.model.Application;
 
-//@Component
+@Component("StrategyB")
 public class FewestCoursesStrategy extends TemplateStrategyAlgorithm {
 
 	@Override
@@ -13,16 +15,8 @@ public class FewestCoursesStrategy extends TemplateStrategyAlgorithm {
 		return 0;
 	}
 
-	/*
-	public Student findBestApplicant(List<DiplomaProjectsManagementApp> applications) {
-		DiplomaProjectsManagementApp bestApp = applications.get(0);
-		for (DiplomaProjectsManagementApp app : applications) {
-			if (app.getApplicantStudent().getRemainingCourses() < bestApp.getApplicantStudent().getRemainingCourses()) {
-				bestApp = app;
-			}
-		}
-		System.out.println("Best Applicant: " + bestApp.getApplicantStudent().getFullname());
-		return bestApp.getApplicantStudent();  
+	@Override
+	public String toString() {
+		return "FewestCoursesStrategy";
 	}
-	*/
 }

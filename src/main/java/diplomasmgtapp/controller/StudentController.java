@@ -1,17 +1,20 @@
 package diplomasmgtapp.controller;
 
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import diplomasmgtapp.model.Professor;
+import diplomasmgtapp.model.Application;
 import diplomasmgtapp.model.Student;
 import diplomasmgtapp.model.Subject;
-import diplomasmgtapp.service.ProfessorService;
 import diplomasmgtapp.service.StudentService;
 
 @Controller
@@ -19,12 +22,6 @@ import diplomasmgtapp.service.StudentService;
 public class StudentController {
 		@Autowired
 		private StudentService studentService;
-		
-		//@Autowired
-		//private SubjectService subjectService;
-		
-		//@Autowired
-		//private SubjectService userService;
 
 		@RequestMapping("/dashboard")
 		public String getProfessorMainMenu() {
@@ -47,24 +44,30 @@ public class StudentController {
 			// use a redirect to prevent duplicate submissions
 			return "redirect:/student/dashboard";
 		}
-		
-		@RequestMapping("/retrieveProfile")
-		public String retrieveProfile(Model model) {
-			return null;
-		}
-		
+
 		@RequestMapping("/listAvailableSubjects")
 		public String listProfessorSubjects(Model model) {
-			return null;
-		}
-		
-		@RequestMapping("/showSubjectForm")
-		public String showSubjectForm(Model model) {
-			return null;
+			
+			List<Subject> allSubjects = studentService.listStudentSubjects();
+			model.addAttribute("allSubjects", allSubjects);
+			return "student/list-subjects";
 		}
 		
 		@RequestMapping("/applyToSubject")
-		public String listApplications(Integer id, Model model) {
-			return null;
+		public String applyToSubject(@RequestParam("subjectId") int subjectId) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			
+			studentService.applyToSubject(username, subjectId);
+
+			return "redirect:/student/listAvailableSubjects";
+		}
+		
+		@RequestMapping("/showApplications")
+		public String listApplications(Model model) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			
+			List<Application> applications = studentService.listApplications(username);
+			model.addAttribute("applications", applications);
+			return "student/list-applications";
 		}
 }

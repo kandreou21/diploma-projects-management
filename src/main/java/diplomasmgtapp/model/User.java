@@ -11,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //auto-increment
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 
@@ -78,7 +76,7 @@ public class User implements UserDetails{
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	//den xrhsimopoiountai pouthena apla ginontai overide apo to interface UserDetails
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;

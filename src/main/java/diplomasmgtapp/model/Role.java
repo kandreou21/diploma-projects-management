@@ -1,7 +1,7 @@
 package diplomasmgtapp.model;
 
 public enum Role {
-	STUDENT("Student"),   //https://www.programiz.com/java-programming/enums h klash role tha einai eite User eite Admin(logika prepei na allaktei sta roles pou uparxoun sto susthma mas)
+	STUDENT("Student"),  
     PROFESSOR("Professor");
   	
 	private final String value;

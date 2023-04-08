@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import diplomasmgtapp.exceptions.WrongStrategyException;
 
-//@Component needed if i hadnt initialised strategies in constructor of SubjectServiceImpl
+@Component
 public class BestApplicantStrategyFactory {
 
 	public static BestApplicantStrategy createStrategy(String strategy) 
@@ -18,8 +18,6 @@ public class BestApplicantStrategyFactory {
 			return new ThresholdStrategy();
 		} else if (strategy == "Random") {
 			return new RandomChoiceStrategy();
-		} else if (strategy == "Explicit") {
-			return new ExplicitAssignmentStrategy();
 		} else throw new WrongStrategyException();
 	}
 }

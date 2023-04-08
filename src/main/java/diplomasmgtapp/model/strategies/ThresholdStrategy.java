@@ -1,29 +1,46 @@
 package diplomasmgtapp.model.strategies;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+
+import org.springframework.stereotype.Component;
 
 import diplomasmgtapp.model.Application;
-import diplomasmgtapp.model.Student;
 
+@Component("StrategyD")
 public class ThresholdStrategy implements BestApplicantStrategy{
 
-	public Student findBestApplicant(List<Application> applications) {
-		Scanner input = new Scanner(System.in).useLocale(Locale.US);
-		System.out.print("Give the threshold for Average Grade:");
-		double gradeThreshold = input.nextDouble();
-		System.out.print("Give the threshold for the number of Remaining Courses:");
-		int coursesThreshold = input.nextInt();
-		
-		Student bestApplicant = new Student("dummy");
+	private double gradeThreshold;
+	private double coursesThreshold;
+	
+	public Application findBestApplicant(List<Application> applications) {
+		Application bestApp = null;
 		for (Application app : applications) {
-			if (app.getApplicantStudent().getAverageGrade() > gradeThreshold && app.getApplicantStudent().getRemainingCourses() < coursesThreshold) {
-				bestApplicant = app.getApplicantStudent();
+			if (app.getApplicantStudent().getAverageGrade() >= gradeThreshold && app.getApplicantStudent().getRemainingCourses() <= coursesThreshold) {
+				bestApp = app;
 			}
 		}
-		System.out.println("Best Applicant: " + bestApplicant.getFullname());
-		return bestApplicant;  
+		System.out.println("Best Applicant: " + bestApp.getApplicantStudent().getFullname());
+		return bestApp;  
 	}
 
+	public double getGradeThreshold() {
+		return gradeThreshold;
+	}
+
+	public void setGradeThreshold(double gradeThreshold) {
+		this.gradeThreshold = gradeThreshold;
+	}
+
+	public double getCoursesThreshold() {
+		return coursesThreshold;
+	}
+
+	public void setCoursesThreshold(double coursesThreshold) {
+		this.coursesThreshold = coursesThreshold;
+	}
+
+	@Override
+	public String toString() {
+		return "ThresholdStrategy";
+	}
 }

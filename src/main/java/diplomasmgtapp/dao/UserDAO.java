@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import diplomasmgtapp.model.User;
 
 @Repository
-public interface UserDAO extends JpaRepository<User, String> {  //<Class, Type of Id>
+public interface UserDAO extends JpaRepository<User, String> {  
 	
 	Optional<User> findByUsername(String username);
 	public User findById(int theId);

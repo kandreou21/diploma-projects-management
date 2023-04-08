@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -55,9 +54,6 @@ public class Student{
 		this.username = username;
 	}
 	//why have username as field and not set their fullnames with the User's username value? because if we change the fullname username!=fullname we will not be able to retrieve profile
-	//public Student(String username) {
-	//	this.username = username;
-	//}
 	
 	public int getId() {
 		return id;
@@ -116,13 +112,18 @@ public class Student{
 	}
 
 	public void applyToDiplomaThesis(Application application) {
-		//applications.add(application);
-	}
-
-	public String toString() {
-		return "Student [id=" + id + ", fullname=" + fullname + ", yearOfStudies=" + yearOfStudies + ", averageGrade="
-				+ averageGrade + ", remainingCourses=" + remainingCourses + ", applications=" + applications + "]";
+		if (!containsApplication(application)) {
+			applications.add(application);
+		}
+		application.setApplicantStudent(this);
 	}
 	
+	public boolean containsApplication(Application application) {//checks if an app is in List applications 
+		for (Application app : applications) {
+			if (app.equals(application)) 
+				return true;
+		}
+		return false;
+	}
 	
 }

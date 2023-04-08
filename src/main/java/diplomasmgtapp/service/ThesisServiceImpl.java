@@ -1,38 +1,34 @@
 package diplomasmgtapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import diplomasmgtapp.dao.ThesisDAO;
 import diplomasmgtapp.model.Thesis;
 
+@Service
 public class ThesisServiceImpl implements ThesisService {
 
 	@Autowired
 	private ThesisDAO thesisDAO;
 
 	@Override
-	public void setImplementationGrade(double implementationGrade, int id) {
-		Thesis thesis = thesisDAO.findById(id);
-		thesis.setImplementationGrade(implementationGrade);
+	public Thesis findById(int thesisId) {
+		return thesisDAO.findById(thesisId);
+	}
+	
+	@Override
+	public void save(Thesis thesis) {
 		thesisDAO.save(thesis);
 	}
-
+	
 	@Override
-	public void setReportGrade(double reportGrade, int id) {
-		Thesis thesis = thesisDAO.findById(id);
-		thesis.setReportGrade(reportGrade);
-		thesisDAO.save(thesis);
+	public void updateThesis(int thesisId, Thesis thesis) {
+		Thesis oldThesis = thesisDAO.findById(thesisId);
+		thesis.setStudent(oldThesis.getStudent());
+		thesis.setSubject(oldThesis.getSubject());
+		
+		thesisDAO.save(thesis);	
 	}
 
-	@Override
-	public void setPresentationGrade(double presentationGrade, int id) {
-		Thesis thesis = thesisDAO.findById(id);
-		thesis.setPresentationGrade(presentationGrade);
-		thesisDAO.save(thesis);
-	}
-
-	@Override
-	public double calculateThesisGrade(int id) {
-		return thesisDAO.findById(id).getOverallGrade();
-	}
 }

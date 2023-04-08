@@ -9,4 +9,5 @@ import diplomasmgtapp.model.Thesis;
 public interface ThesisDAO extends JpaRepository<Thesis, Integer> {
 
 	public Thesis findById(int id);
+
 }

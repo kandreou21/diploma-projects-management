@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Professor Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+	<h3>Applications</h3>
+	<td th:text="${subject.title}" />
+	<hr>
+	
+	Select Assignment Strategy:	
+	
+	<a th:href="@{/professor/assign(subjectId=${subject.id}, strategyIndex=0)}"
+		class="btn btn-primary btn-sm mb-3">
+		Best Average Grades
+	</a>
+	
+	<a th:href="@{/professor/assign(subjectId=${subject.id}, strategyIndex=1)}"
+		class="btn btn-primary btn-sm mb-3">
+		Fewest Courses Remaining
+	</a>
+	
+	<a th:href="@{/professor/assign(subjectId=${subject.id}, strategyIndex=2)}"
+		class="btn btn-primary btn-sm mb-3">
+		Random Choise
+	</a>
+	 
+	<form th:action="@{/professor/assign(subjectId=${subject.id}, strategyIndex=3)}" method="post">
+        <div class="form-group">
+            <input type="text" th:name="gradeThreshold" class="form-control" placeholder="Average Grades Threshold" id="gradeThreshold" name="gradeThreshold">
+        </div>
+        <div class="form-group">
+            <input type="text" th:name="coursesThreshold" class="form-control" placeholder="Remaining Courses Threshold" id="coursesThreshold" name="coursesThreshold">
+        </div>
+        <button type="submit" class="btn btn-primary">Threshold Strategy</button>
+    </form>
+    
+	<hr>
+	
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Student's fullname</th>
+				<th>Year of Studies</th>
+				<th>Average grade</th>
+				<th>Remaining Courses</th>
+				<th>Explicitly Assign Thesis</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempApplication : ${applications}">
+			
+				<td th:text="${tempApplication.applicantStudent.fullname}" />	
+				<td th:text="${tempApplication.applicantStudent.yearOfStudies}" />
+				<td th:text="${tempApplication.applicantStudent.averageGrade}" />	
+				<td th:text="${tempApplication.applicantStudent.remainingCourses}" />	
+				
+				<td>
+					<!-- Add "assign" button/link -->					
+					<a th:href="@{/professor/assignExplicitly(applicationId=${tempApplication.id})}"
+					   class="btn btn-danger btn-sm"
+					   onclick="if (!(confirm('Are you sure you want to assign the diploma thesis to this student?'))) return false">
+						Assign
+					</a>
+					
+				</td>
+				
+				
+			</tr>
+		</tbody>		
+	</table>
+	<hr>
+		<a th:href="@{/professor/listProfessorSubjects}">Back to Subjects</a>	&nbsp;
+		<a th:href="@{/professor/dashboard}"> Back to dashboard</a>	&nbsp;	
+		<a th:href="@{/professor/listProfessorTheses}" class="btn btn-primary btn-sm"> Access Theses</a>
+</div>
+	
+</body>
+</html>
+
+
+

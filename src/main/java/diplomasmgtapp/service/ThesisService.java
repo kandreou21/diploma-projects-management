@@ -1,9 +1,13 @@
 package diplomasmgtapp.service;
-//not used
+
+import org.springframework.stereotype.Service;
+
+import diplomasmgtapp.model.Thesis;
+
+@Service
 public interface ThesisService {
 
-	public void setImplementationGrade(double implementationGrade, int id);
-	public void setReportGrade(double reportGrade, int id);
-	public void setPresentationGrade(double presentationGrade, int id);
-	public double calculateThesisGrade(int id);
+	public Thesis findById(int thesisId);
+	public void save(Thesis thesis); 
+	public void updateThesis(int thesisId, Thesis thesis);
 }

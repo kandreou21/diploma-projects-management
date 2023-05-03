@@ -19,6 +19,7 @@ import diplomasmgtapp.model.strategies.ThresholdStrategy;
 public class ProfessorServiceImpl implements ProfessorService {
 	@Autowired
 	private List<BestApplicantStrategy> bestApplicantStrategies; 
+	private BestApplicantStrategy strategy;	
 	
 	@Autowired
 	private ProfessorDAO professorDAO;
@@ -36,6 +37,10 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 	public void setBestApplicantStrategies(List<BestApplicantStrategy> bestApplicantStrategies) {
 		this.bestApplicantStrategies = bestApplicantStrategies;
+	}
+
+	public void configureStrategy(BestApplicantStrategy strategy) {
+		this.strategy = strategy;
 	}
 
 	@Override
@@ -90,7 +95,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
 	@Override
 	public void assignSubject(String username, int subjectId, int strategyIndex) {
-		BestApplicantStrategy strategy = bestApplicantStrategies.get(strategyIndex);
+		configureStrategy(bestApplicantStrategies.get(strategyIndex));
 		executeAssignment(username, subjectId, strategy);
 	}
 	

@@ -65,3 +65,12 @@ CREATE TABLE `theses` (
   CONSTRAINT `fk_subject` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`),
   CONSTRAINT `fk_professor` FOREIGN KEY (`professor_id`) REFERENCES `professors` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+INSERT INTO `users` VALUES 
+	(1,'professor','professor','PROFESSOR'),
+	(2,'student','student','STUDENT');
+	
+insert into professors(id, fullname, specialty, user_name)values(1,'professor','software','professor');
+insert into students(id, fullname, year_of_studies, avg_grade, courses_remain, user_name)values(1,'student',5,7,8,'student');
+insert into subjects(id, title, objectives, supervisor_id)values(1,'software engineering','spring boot',1);
+insert into theses(id, implementation_grade, report_grade, presentation_grade, student_id, subject_id, professor_id)values(1,0,0,0,1,1,1);

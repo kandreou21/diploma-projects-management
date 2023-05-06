@@ -11,6 +11,6 @@ import diplomasmgtapp.model.Subject;
 public interface SubjectDAO extends JpaRepository<Subject, Integer> {
 
 	public Subject findById(int theId);
-	public Subject findByTitle(String title);
 	public List<Subject> findAll();
+	
 }

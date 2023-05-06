@@ -8,6 +8,5 @@ import diplomasmgtapp.model.Professor;
 @Repository
 public interface ProfessorDAO extends JpaRepository<Professor, Integer> {
 
-	public Professor findByFullname(String fullname);
 	public Professor findByUsername(String username);
 }

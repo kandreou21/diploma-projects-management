@@ -1,6 +1,5 @@
 package diplomasmgtapp.service;
 
-import diplomasmgtapp.model.Application;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Student;
 import diplomasmgtapp.model.Subject;
@@ -65,7 +64,7 @@ class StudentServiceTest {
 		int bef = studentService.listApplications("student").size();
 		studentService.applyToSubject("student", 99);
 		int aft = studentService.listApplications("student").size();
-		Assertions.assertTrue(bef == aft-1);
+		Assertions.assertEquals(bef, aft - 1);
 	}
 
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
@@ -38,7 +37,8 @@ class ProfessorServiceTest {
 
 	@Test
 	void testSaveProfile(){
-		Professor testProfessor = new Professor("professor");
+		Professor testProfessor = new Professor("professor", "testSpecialty");
+		testProfessor.setUsername("professor");
 		professorService.saveProfile(testProfessor);
 		Professor professor = professorService.retrieveProfile("professor");
 		Assertions.assertNotNull(professor);
@@ -46,8 +46,6 @@ class ProfessorServiceTest {
 
 	@Test
 	void testAddSubject(){
-		Professor testProfessor = new Professor("professor");
-		professorService.saveProfile(testProfessor);
 		Professor professor = professorService.retrieveProfile("professor");
 		Subject testSubject = new Subject(
 				"testTitle",

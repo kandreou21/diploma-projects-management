@@ -1,6 +1,9 @@
 package diplomasmgtapp.service;
 
+import diplomasmgtapp.model.Application;
+import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Student;
+import diplomasmgtapp.model.Subject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +19,10 @@ class StudentServiceTest {
 
 	@Autowired
 	StudentService studentService;
+	@Autowired
+	ProfessorService professorService;
+	@Autowired
+	SubjectService subjectService;
 
 	@Test
 	void testStudentServiceImplIsNotNull(){Assertions.assertNotNull(studentService);}
@@ -43,7 +50,22 @@ class StudentServiceTest {
 
 	@Test
 	void testApplyToSubject(){
-		Assertions.fail("Not implemented yet");
+		Student student = studentService.retrieveProfile("student");
+		studentService.saveProfile(student);
+
+		Professor testProfessor = new Professor("professor", "testSpecialty");
+		testProfessor.setUsername("professor");
+		professorService.saveProfile(testProfessor);
+		testProfessor = professorService.retrieveProfile("professor");
+
+		Subject subject = new Subject("title","objective", testProfessor);
+		subject.setId(99);
+		subjectService.save(subject);
+
+		int bef = studentService.listApplications("student").size();
+		studentService.applyToSubject("student", 99);
+		int aft = studentService.listApplications("student").size();
+		Assertions.assertTrue(bef == aft-1);
 	}
 
 }

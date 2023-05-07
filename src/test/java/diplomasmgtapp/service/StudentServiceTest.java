@@ -1,11 +1,7 @@
 package diplomasmgtapp.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Student;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -20,6 +16,9 @@ class StudentServiceTest {
 
 	@Autowired
 	StudentService studentService;
+
+	@Test
+	void testStudentServiceImplIsNotNull(){Assertions.assertNotNull(studentService);}
 
 	@Test
 	void testRetrieveProfileReturnsNull(){
@@ -40,6 +39,11 @@ class StudentServiceTest {
 		studentService.saveProfile(testStudent);
 		Student student = studentService.retrieveProfile("student");
 		Assertions.assertNotNull(student);
+	}
+
+	@Test
+	void testApplyToSubject(){
+		Assertions.fail("Not implemented yet");
 	}
 
 }

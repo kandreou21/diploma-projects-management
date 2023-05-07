@@ -46,6 +46,8 @@ class ProfessorServiceTest {
 
 	@Test
 	void testAddSubject(){
+		Professor testProfessor = new Professor("professor");
+		professorService.saveProfile(testProfessor);
 		Professor professor = professorService.retrieveProfile("professor");
 		Subject testSubject = new Subject(
 				"testTitle",

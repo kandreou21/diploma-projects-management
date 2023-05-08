@@ -30,6 +30,7 @@ class SubjectServiceTest {
 		subjectService.save(subject);
 		Subject returnSubject = subjectService.findById(subject.getId());
 		Assertions.assertEquals(returnSubject.getId(), subject.getId());
+		Assertions.assertInstanceOf(Subject.class, returnSubject);
 	}
 
 	@Test

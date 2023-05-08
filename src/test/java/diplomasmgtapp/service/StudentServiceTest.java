@@ -3,6 +3,7 @@ package diplomasmgtapp.service;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Student;
 import diplomasmgtapp.model.Subject;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,22 +35,24 @@ class StudentServiceTest {
 
 	@Test
 	void testRetrieveProfileReturnsStudent(){
-		Student student = studentService.retrieveProfile("student");
-		Assertions.assertNotNull(student);
+		Student student = new Student("testStudent1");
+		studentService.saveProfile(student);
+		Student retStudent = studentService.retrieveProfile("testStudent1");
+		Assertions.assertNotNull(retStudent);
 	}
 
 	@Test
 	void testSaveProfile()
 	{
-		Student testStudent = new Student("student");
+		Student testStudent = new Student("testStudent");
 		studentService.saveProfile(testStudent);
-		Student student = studentService.retrieveProfile("student");
+		Student student = studentService.retrieveProfile("testStudent");
 		Assertions.assertNotNull(student);
 	}
 
 	@Test
 	void testApplyToSubject(){
-		Student student = studentService.retrieveProfile("student");
+		Student student = new Student("student");
 		studentService.saveProfile(student);
 
 		Professor testProfessor = new Professor("professor", "testSpecialty");

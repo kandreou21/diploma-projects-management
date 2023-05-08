@@ -3,6 +3,7 @@ package diplomasmgtapp.service;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Subject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,16 +32,19 @@ class ProfessorServiceTest {
 
 	@Test
 	void testRetrieveProfileReturnsProfessor(){
-		Professor professorProfile = professorService.retrieveProfile("professor");
-		Assertions.assertNotNull(professorProfile);
+		Professor professor = new Professor("testProfessor1");
+		professorService.saveProfile(professor);
+		Professor retProfessor = professorService.retrieveProfile("testProfessor1");
+		Assertions.assertNotNull(retProfessor);
+		Assertions.assertInstanceOf(Professor.class, retProfessor);
 	}
 
 	@Test
 	void testSaveProfile(){
-		Professor testProfessor = new Professor("professor", "testSpecialty");
-		testProfessor.setUsername("professor");
+		Professor testProfessor = new Professor("testProfessor", "testSpecialty");
+		testProfessor.setUsername("testProfessor");
 		professorService.saveProfile(testProfessor);
-		Professor professor = professorService.retrieveProfile("professor");
+		Professor professor = professorService.retrieveProfile("testProfessor");
 		Assertions.assertNotNull(professor);
 	}
 

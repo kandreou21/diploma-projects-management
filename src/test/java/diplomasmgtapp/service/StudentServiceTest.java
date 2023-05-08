@@ -1,5 +1,6 @@
 package diplomasmgtapp.service;
 
+import diplomasmgtapp.model.Application;
 import diplomasmgtapp.model.Professor;
 import diplomasmgtapp.model.Student;
 import diplomasmgtapp.model.Subject;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 @SpringBootTest
 @TestPropertySource(
@@ -53,12 +56,12 @@ class StudentServiceTest {
 	@Test
 	void testApplyToSubject(){
 		Student student = new Student("student");
+		student.setApplications(new ArrayList<Application>());
 		studentService.saveProfile(student);
 
-		Professor testProfessor = new Professor("professor", "testSpecialty");
-		testProfessor.setUsername("professor");
+		Professor testProfessor = new Professor("testSProfessor");
 		professorService.saveProfile(testProfessor);
-		testProfessor = professorService.retrieveProfile("professor");
+		testProfessor = professorService.retrieveProfile("testSProfessor");
 
 		Subject subject = new Subject("title","objective", testProfessor);
 		subject.setId(99);

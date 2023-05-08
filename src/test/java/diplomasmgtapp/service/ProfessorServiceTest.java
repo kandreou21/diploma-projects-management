@@ -1,7 +1,8 @@
 package diplomasmgtapp.service;
 
-import diplomasmgtapp.model.Professor;
-import diplomasmgtapp.model.Subject;
+import diplomasmgtapp.dao.ApplicationDAO;
+import diplomasmgtapp.model.*;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,20 @@ class ProfessorServiceTest {
 
 	@Autowired
 	ProfessorService professorService;
+
+	@Autowired
+	ApplicationDAO applicationDAO;
+
+	@Autowired
+	StudentService studentService;
+
+	@Autowired
+	SubjectService subjectService;
+
+	@AfterAll
+	static void clear(){
+		// find how to delete all objects in db after finishing
+	}
 
 	@Test
 	void testProfessorServiceImplIsNotNull(){Assertions.assertNotNull(professorService);}
@@ -50,19 +65,37 @@ class ProfessorServiceTest {
 
 	@Test
 	void testAddSubject(){
-		Professor professor = professorService.retrieveProfile("professor");
+		Professor professor = new Professor("professor", "specialty");
+		professor.setUsername("testProfessor3");
+		professorService.saveProfile(professor);
 		Subject testSubject = new Subject(
 				"testTitle",
 				"testObjective",
 				professor);
-		professorService.addSubject("professor", testSubject);
+		subjectService.save(testSubject);
+		professorService.addSubject("testProfessor3", testSubject);
 		Assertions.assertTrue(
-				professorService.listProfessorSubjects("professor").contains(testSubject));
+				professorService.listProfessorSubjects("testProfessor3").contains(testSubject));
 	}
 
 	@Test
 	void testAssignSubjectExplicitly(){
-		fail("Not yet implemented");
+		Student student = new Student("testPStudent");
+		Subject subject = new Subject();
+		Application application = new Application(student,subject);
+
+		studentService.saveProfile(student);
+		subjectService.save(subject);
+		applicationDAO.save(application);
+
+		Professor professor = new Professor("professor", "specialty");
+		professor.setUsername("testProfessor2");
+		professorService.saveProfile(professor);
+
+		int bef = professorService.listProfessorTheses("testProfessor2").size();
+		professorService.assignSubjectExplicitly("testProfessor2", application.getId());
+		int aft = professorService.listProfessorTheses("testProfessor2").size();
+		Assertions.assertEquals(bef, aft-1);
 	}
 
 	@Test

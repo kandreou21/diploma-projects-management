@@ -29,6 +29,9 @@ class SubjectServiceTest {
 		Subject subject = new Subject();
 		subjectService.save(subject);
 		Subject returnSubject = subjectService.findById(subject.getId());
+
+		subjectService.deleteById(returnSubject.getId());
+
 		Assertions.assertEquals(returnSubject.getId(), subject.getId());
 		Assertions.assertInstanceOf(Subject.class, returnSubject);
 	}
@@ -49,6 +52,9 @@ class SubjectServiceTest {
 		Subject subject = new Subject();
 		subjectService.save(subject);
 		int aft = subjectService.findAll().size();
+
+		subjectService.deleteById(subject.getId());
+
 		assertEquals(bef, aft-1);
 	}
 }

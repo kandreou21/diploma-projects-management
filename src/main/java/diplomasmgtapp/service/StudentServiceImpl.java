@@ -51,4 +51,9 @@ public class StudentServiceImpl implements StudentService {
 	public List<Application> listApplications(String username) {
 		return applicationDAO.findAllByApplicantStudent(retrieveProfile(username));
 	}
+
+	@Override
+	public void deleteById(int id){
+		studentDAO.deleteById(id);
+	}
 }

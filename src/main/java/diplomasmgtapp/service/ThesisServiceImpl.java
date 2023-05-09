@@ -31,4 +31,9 @@ public class ThesisServiceImpl implements ThesisService {
 		thesisDAO.save(thesis);	
 	}
 
+	@Override
+	public void deleteById(int id){
+		thesisDAO.deleteById(id);
+	}
+
 }

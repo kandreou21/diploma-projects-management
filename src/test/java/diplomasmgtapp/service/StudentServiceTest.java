@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,11 @@ class StudentServiceTest {
 		Student student = new Student("testStudent1");
 		studentService.saveProfile(student);
 		Student retStudent = studentService.retrieveProfile("testStudent1");
+
+		studentService.deleteById(retStudent.getId());
+
 		Assertions.assertNotNull(retStudent);
+		Assertions.assertInstanceOf(Student.class, retStudent);
 	}
 
 	@Test
@@ -50,10 +55,14 @@ class StudentServiceTest {
 		Student testStudent = new Student("testStudent");
 		studentService.saveProfile(testStudent);
 		Student student = studentService.retrieveProfile("testStudent");
+
+		studentService.deleteById(student.getId());
+
 		Assertions.assertNotNull(student);
 	}
 
 	@Test
+	@Transactional
 	void testApplyToSubject(){
 		Student student = new Student("student");
 		student.setApplications(new ArrayList<Application>());
@@ -64,12 +73,16 @@ class StudentServiceTest {
 		testProfessor = professorService.retrieveProfile("testSProfessor");
 
 		Subject subject = new Subject("title","objective", testProfessor);
-		subject.setId(99);
 		subjectService.save(subject);
 
 		int bef = studentService.listApplications("student").size();
 		studentService.applyToSubject("student", 99);
 		int aft = studentService.listApplications("student").size();
+
+		subjectService.deleteById(subject.getId());
+		professorService.deleteById(testProfessor.getId());
+		studentService.deleteById(student.getId());
+
 		Assertions.assertEquals(bef, aft - 1);
 	}
 

@@ -10,4 +10,5 @@ public interface ThesisService {
 	public Thesis findById(int thesisId);
 	public void save(Thesis thesis); 
 	public void updateThesis(int thesisId, Thesis thesis);
+	public void deleteById(int id);
 }

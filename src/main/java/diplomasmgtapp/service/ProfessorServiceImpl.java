@@ -114,4 +114,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 			professorDAO.save(professor);
 		}
 	}
+
+	@Override
+	public void deleteById(int id){
+		professorDAO.deleteById(id);
+	}
 }

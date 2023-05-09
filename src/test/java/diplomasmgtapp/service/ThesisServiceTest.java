@@ -27,6 +27,9 @@ class ThesisServiceTest {
 		Thesis thesis =  new Thesis();
 		thesisService.save(thesis);
 		Thesis returnThesis = thesisService.findById(thesis.getId());
+
+		thesisService.deleteById(returnThesis.getId());
+
 		Assertions.assertEquals(returnThesis.getId(), thesis.getId());
 		Assertions.assertInstanceOf(Thesis.class, returnThesis);
 	}
@@ -45,10 +48,16 @@ class ThesisServiceTest {
 		aftThesis.setImplementationGrade(-2.0);
 
 		thesisService.updateThesis(befThesis.getId(), aftThesis);
+		double rep = aftThesis.getReportGrade();
+		double pre = aftThesis.getPresentationGrade();
+		double imp = aftThesis.getImplementationGrade();
 
-		Assertions.assertEquals(aftThesis.getReportGrade(), -2);
-		Assertions.assertEquals(aftThesis.getPresentationGrade(), -2);
-		Assertions.assertEquals(aftThesis.getImplementationGrade(), -2);
+		thesisService.deleteById(befThesis.getId());
+		thesisService.deleteById(aftThesis.getId());
+
+		Assertions.assertEquals(rep, -2);
+		Assertions.assertEquals(pre, -2);
+		Assertions.assertEquals(imp, -2);
 	}
 
 }

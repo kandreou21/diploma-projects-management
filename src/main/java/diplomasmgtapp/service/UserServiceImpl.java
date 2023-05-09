@@ -46,4 +46,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public User findById(int id) {
 		return userDAO.findById(id);
 	}
+
+	@Override
+	public void deleteById(int id) {
+		userDAO.deleteById(id);
+	}
+
+
 }

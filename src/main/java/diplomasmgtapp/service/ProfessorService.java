@@ -22,5 +22,6 @@ public interface ProfessorService {
 	public void assignSubject(String username, int subjectId, int strategyIndex);
 	public List<BestApplicantStrategy> getBestApplicantStrategies();
 	public void assignThresholdStrategy(String username, int subjectId, double gradeThreshold, int coursesThreshold);
+	public void deleteById(int id);
 }
 

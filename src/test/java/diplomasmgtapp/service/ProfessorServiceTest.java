@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -31,10 +32,6 @@ class ProfessorServiceTest {
 	@Autowired
 	SubjectService subjectService;
 
-	@AfterAll
-	static void clear(){
-		// find how to delete all objects in db after finishing
-	}
 
 	@Test
 	void testProfessorServiceImplIsNotNull(){Assertions.assertNotNull(professorService);}
@@ -50,6 +47,9 @@ class ProfessorServiceTest {
 		Professor professor = new Professor("testProfessor1");
 		professorService.saveProfile(professor);
 		Professor retProfessor = professorService.retrieveProfile("testProfessor1");
+
+		professorService.deleteById(professor.getId());
+
 		Assertions.assertNotNull(retProfessor);
 		Assertions.assertInstanceOf(Professor.class, retProfessor);
 	}
@@ -60,10 +60,14 @@ class ProfessorServiceTest {
 		testProfessor.setUsername("testProfessor");
 		professorService.saveProfile(testProfessor);
 		Professor professor = professorService.retrieveProfile("testProfessor");
+
+		professorService.deleteById(professor.getId());
+
 		Assertions.assertNotNull(professor);
 	}
 
 	@Test
+	@Transactional
 	void testAddSubject(){
 		Professor professor = new Professor("professor", "specialty");
 		professor.setUsername("testProfessor3");
@@ -74,11 +78,17 @@ class ProfessorServiceTest {
 				professor);
 		subjectService.save(testSubject);
 		professorService.addSubject("testProfessor3", testSubject);
-		Assertions.assertTrue(
-				professorService.listProfessorSubjects("testProfessor3").contains(testSubject));
+
+		boolean contain = professorService.listProfessorSubjects("testProfessor3").contains(testSubject);
+
+		subjectService.deleteById(testSubject.getId());
+		professorService.deleteById(professor.getId());
+
+		Assertions.assertTrue(contain);
 	}
 
 	@Test
+	@Transactional
 	void testAssignSubjectExplicitly(){
 		Student student = new Student("testPStudent");
 		Subject subject = new Subject();
@@ -95,7 +105,14 @@ class ProfessorServiceTest {
 		int bef = professorService.listProfessorTheses("testProfessor2").size();
 		professorService.assignSubjectExplicitly("testProfessor2", application.getId());
 		int aft = professorService.listProfessorTheses("testProfessor2").size();
+
+		//applicationDAO.deleteById(application.getId());
+		subjectService.deleteById(subject.getId());
+		professorService.deleteById(professor.getId());
+		studentService.deleteById(student.getId());
+
 		Assertions.assertEquals(bef, aft-1);
+
 	}
 
 	@Test
@@ -105,6 +122,13 @@ class ProfessorServiceTest {
 
 	@Test
 	void testAssignThresholdStrategy(){
-		fail("Not yet implemented");
+		Professor professor = new Professor("testProfessor4");
+		Subject subject = new Subject();
+
+		professorService.saveProfile(professor);
+		subjectService.save(subject);
+
+		professorService.assignThresholdStrategy(
+				"testProfessor4", subject.getId(), 2, 2);
 	}
 }

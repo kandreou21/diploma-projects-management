@@ -14,5 +14,6 @@ public interface StudentService {
 	public Student retrieveProfile(String username);
 	public List<Subject> listStudentSubjects();
 	public List<Application> listApplications(String username);
-	public void applyToSubject(String username, int subjectId); 
+	public void applyToSubject(String username, int subjectId);
+	public void deleteById(int id);
 }

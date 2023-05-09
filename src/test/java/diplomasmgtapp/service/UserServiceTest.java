@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @TestPropertySource(
@@ -22,23 +23,36 @@ class UserServiceTest {
 	void testProfessorServiceImplIsNotNull(){ Assertions.assertNotNull(userService); }
 
 	@Test
+	@Transactional
 	void testIsUserPresentReturnsTrue(){
 		User user = new User();
 		user.setUsername("testUser");
 		user.setPassword("testPassword");
 		userService.saveUser(user);
-		Assertions.assertTrue(userService.isUserPresent(user));
+
+		boolean present = userService.isUserPresent(user);
+
+		userService.deleteById(user.getId());
+
+
+		Assertions.assertTrue(present);
 	}
 
 	@Test
+	@Transactional
 	void testFindByIdReturnsUser(){
 		User user = new User();
 		user.setUsername("testUser1");
 		user.setPassword("testPassword1");
 		userService.saveUser(user);
 		User returnUser = userService.findById(user.getId());
+
+		userService.deleteById(user.getId());
+		userService.deleteById(returnUser.getId());
+
 		Assertions.assertEquals(user.getId(), returnUser.getId());
 		Assertions.assertInstanceOf(User.class, returnUser);
+
 	}
 
 }

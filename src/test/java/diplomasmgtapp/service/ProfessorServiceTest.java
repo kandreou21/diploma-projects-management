@@ -2,14 +2,16 @@ package diplomasmgtapp.service;
 
 import diplomasmgtapp.dao.ApplicationDAO;
 import diplomasmgtapp.model.*;
-import org.junit.jupiter.api.AfterAll;
+import diplomasmgtapp.model.strategies.BestApplicantStrategy;
+import diplomasmgtapp.model.strategies.ThresholdStrategy;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -116,19 +118,69 @@ class ProfessorServiceTest {
 	}
 
 	@Test
+	@Transactional
 	void testAssignSubject(){
-		fail("Not yet implemented");
-	}
+		Professor professor = new Professor("professor", "specialty");
+		professor.setUsername("testProfessor5");
+		Subject subject = new Subject("title", "objective", professor);
+		Student student = new Student("student", 1, 10, 1);
+		student.setUsername("testPStudent2");
+		Application application = new Application(student, subject);
 
-	@Test
-	void testAssignThresholdStrategy(){
-		Professor professor = new Professor("testProfessor4");
-		Subject subject = new Subject();
 
 		professorService.saveProfile(professor);
 		subjectService.save(subject);
+		studentService.saveProfile(student);
+		applicationDAO.save(application);
+
+		professorService.assignSubject("testProfessor5", subject.getId(), 0);
+
+		int first = 0;
+		for (Thesis t : professor.getTheses()){
+			if (t.getStudent().getFullname().equals(student.getFullname()) &&
+					t.getSubject().getTitle().equals(subject.getTitle())){
+				if (first == 0) first = 1;
+				else if (first == 1) fail("Found duplicate Thesis at test!");
+			}
+		}
+		Assertions.assertEquals(1, first);
+	}
+
+	@Test
+	@Transactional
+	void testAssignThresholdStrategy(){
+		Professor professor = new Professor("professor", "specialty");
+		professor.setUsername("testProfessor4");
+		Subject subject = new Subject("title", "objective", professor);
+		Student student = new Student("student", 1, 10, 1);
+		student.setUsername("testPStudent1");
+		Application application = new Application(student, subject);
+
+
+		professorService.saveProfile(professor);
+		subjectService.save(subject);
+		studentService.saveProfile(student);
+		applicationDAO.save(application);
+
 
 		professorService.assignThresholdStrategy(
 				"testProfessor4", subject.getId(), 2, 2);
+
+		int first = 0;
+		for (Thesis t : professor.getTheses()){
+			if (t.getStudent().getFullname().equals(student.getFullname()) &&
+					t.getSubject().getTitle().equals(subject.getTitle())){
+				if (first == 0) first = 1;
+				else if (first == 1) fail("Found duplicate Thesis at test!");
+			}
+		}
+		Assertions.assertEquals(1, first);
+
+
+
+//		applicationDAO.deleteById(application.getId());
+//		subjectService.deleteById(subject.getId());
+//		professorService.deleteById(professor.getId());
+//		studentService.deleteById(student.getId());
 	}
 }

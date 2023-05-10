@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -126,6 +127,9 @@ class ProfessorServiceTest {
 		Student student = new Student("student", 1, 10, 1);
 		student.setUsername("testPStudent2");
 		Application application = new Application(student, subject);
+		List<Application> list = subject.getApplications();
+		list.add(application);
+		subject.setApplications(list);
 
 
 		professorService.saveProfile(professor);
@@ -133,17 +137,13 @@ class ProfessorServiceTest {
 		studentService.saveProfile(student);
 		applicationDAO.save(application);
 
+		int bef = professorService.listApplications(subject.getId()).size();
+
 		professorService.assignSubject("testProfessor5", subject.getId(), 0);
 
-		int first = 0;
-		for (Thesis t : professor.getTheses()){
-			if (t.getStudent().getFullname().equals(student.getFullname()) &&
-					t.getSubject().getTitle().equals(subject.getTitle())){
-				if (first == 0) first = 1;
-				else if (first == 1) fail("Found duplicate Thesis at test!");
-			}
-		}
-		Assertions.assertEquals(1, first);
+		int aft = professorService.listApplications(subject.getId()).size();
+
+		Assertions.assertEquals(aft, bef-1);
 	}
 
 	@Test
@@ -155,6 +155,9 @@ class ProfessorServiceTest {
 		Student student = new Student("student", 1, 10, 1);
 		student.setUsername("testPStudent1");
 		Application application = new Application(student, subject);
+		List<Application> list = subject.getApplications();
+		list.add(application);
+		subject.setApplications(list);
 
 
 		professorService.saveProfile(professor);
@@ -162,19 +165,14 @@ class ProfessorServiceTest {
 		studentService.saveProfile(student);
 		applicationDAO.save(application);
 
+		int bef = professorService.listApplications(subject.getId()).size();
 
 		professorService.assignThresholdStrategy(
 				"testProfessor4", subject.getId(), 2, 2);
 
-		int first = 0;
-		for (Thesis t : professor.getTheses()){
-			if (t.getStudent().getFullname().equals(student.getFullname()) &&
-					t.getSubject().getTitle().equals(subject.getTitle())){
-				if (first == 0) first = 1;
-				else if (first == 1) fail("Found duplicate Thesis at test!");
-			}
-		}
-		Assertions.assertEquals(1, first);
+		int aft = professorService.listApplications(subject.getId()).size();
+
+		Assertions.assertEquals(aft, bef-1);
 
 
 

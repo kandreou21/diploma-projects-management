@@ -24,7 +24,7 @@ public class StudentController {
 		private StudentService studentService;
 
 		@RequestMapping("/dashboard")
-		public String getProfessorMainMenu() {
+		public String getStudentMainMenu() {
 			return "student/dashboard";
 		}
 		
@@ -46,7 +46,7 @@ public class StudentController {
 		}
 
 		@RequestMapping("/listAvailableSubjects")
-		public String listProfessorSubjects(Model model) {
+		public String listStudentSubjects(Model model) {
 			
 			List<Subject> allSubjects = studentService.listStudentSubjects();
 			model.addAttribute("allSubjects", allSubjects);

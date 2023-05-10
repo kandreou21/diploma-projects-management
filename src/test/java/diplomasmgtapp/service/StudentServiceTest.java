@@ -64,7 +64,7 @@ class StudentServiceTest {
 	@Test
 	@Transactional
 	void testApplyToSubject(){
-		Student student = new Student("student");
+		Student student = new Student("testStudent");
 		student.setApplications(new ArrayList<Application>());
 		studentService.saveProfile(student);
 
@@ -75,9 +75,9 @@ class StudentServiceTest {
 		Subject subject = new Subject("title","objective", testProfessor);
 		subjectService.save(subject);
 
-		int bef = studentService.listApplications("student").size();
-		studentService.applyToSubject("student", 99);
-		int aft = studentService.listApplications("student").size();
+		int bef = studentService.listApplications("testStudent").size();
+		studentService.applyToSubject("testStudent", 99);
+		int aft = studentService.listApplications("testStudent").size();
 
 		subjectService.deleteById(subject.getId());
 		professorService.deleteById(testProfessor.getId());

@@ -1,1 +1,0 @@
-INSERT INTO `applications` (`id`, `student_id`, `subject_id`) VALUES ('100', '1', '1');

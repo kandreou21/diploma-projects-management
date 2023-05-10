@@ -1,12 +1,14 @@
 CREATE DATABASE  IF NOT EXISTS `diplomas`;
 USE `diplomas`;
 
-DROP TABLE IF EXISTS `users`;
-DROP TABLE IF EXISTS `professors`;
-DROP TABLE IF EXISTS `students`;
-DROP TABLE IF EXISTS `subjects`;
 DROP TABLE IF EXISTS `applications`;
 DROP TABLE IF EXISTS `theses`;
+DROP TABLE IF EXISTS `subjects`;
+DROP TABLE IF EXISTS `professors`;
+DROP TABLE IF EXISTS `students`;
+DROP TABLE IF EXISTS `users`;
+
+
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
